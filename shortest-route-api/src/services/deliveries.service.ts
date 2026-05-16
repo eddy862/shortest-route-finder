@@ -47,8 +47,8 @@ export async function markDeliveryArrived(input: UpdateDeliveryStatusInput) {
 
     if (delivery.status !== "departed") {
         throw new HttpError(
-            400,
-            "VALIDATION_ERROR",
+            422,
+            "UNPROCESSABLE_STATE",
             `Invalid delivery status transition. Current status: ${delivery.status}. Only deliveries with "departed" status can be marked as "arrived".`,
             [{
                 field: "delivery_id",

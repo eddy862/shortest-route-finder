@@ -2,7 +2,6 @@ import { getAllLocationsWithRoadCount, getCustomerLocations, getDepotLocation } 
 import { buildGraph } from "../graph/buildGraph";
 import { getReachableNodeIds } from "../graph/reachability";
 import { HttpError } from "../utils/httpError";
-import { isReachableFromDepot } from "./route.service";
 
 export interface UnreachableLocationItem {
     id: number;
