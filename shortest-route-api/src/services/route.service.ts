@@ -1,6 +1,7 @@
 import { getAllLocations, getLocationById } from "../db/queries/locations.repo";
 import { buildGraph } from "../graph/buildGraph";
 import { dijkstra } from "../graph/dijkstra";
+import { isReachable } from "../graph/reachability";
 import { HttpError } from "../utils/httpError";
 
 export interface RoutePathNode {
@@ -72,8 +73,7 @@ export async function findShortestRoute(fromId: number, toId: number): Promise<F
     }
 }
 
-export async function isReachable(fromId: number, toId: number): Promise<boolean> {
+export async function isReachableFromDepot(fromId: number, toId: number): Promise<boolean> {
     const graph = await buildGraph();
-    const result = dijkstra(graph, fromId, toId);
-    return result.reachable;
+    return isReachable(graph, fromId, toId);
 }

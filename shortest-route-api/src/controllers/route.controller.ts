@@ -2,43 +2,52 @@ import { NextFunction, Request, Response } from "express";
 import { HttpError } from "../utils/httpError";
 import { findShortestRoute } from "../services/route.service";
 
-function parseRequiredInt(value: unknown, field: string): number {
-    if (value === undefined || value === null || value === "") {
-        throw new HttpError(
-            400,
-            "VALIDATION_ERROR",
-            `Missing required query parameter: ${field}`,
-            [{
-                field,
-                issue: "Missing required parameter"
-            }]
-        );
-    }
-
-    const parsed = Number(value);
-    if (isNaN(parsed)) {
-        throw new HttpError(
-            400,
-            "VALIDATION_ERROR",
-            `Invalid value for parameter: ${field}`,
-            [{
-                field,
-                issue: "Invalid integer"
-            }]
-        );
-    }
-
-    return parsed;
-}
-
 export async function getRoute(req: Request, res: Response, next: NextFunction) {
     try {
-        const fromId = parseRequiredInt(req.query.from, "from");
-        const toId = parseRequiredInt(req.query.to, "to");
+        const query = req.query as Partial<{ from: unknown; to: unknown }>;
+
+        if (query.from === undefined || query.to === undefined) {
+            throw new HttpError(
+                400,
+                "VALIDATION_ERROR",
+                "from and to are required query parameters",
+                [
+                    {
+                        field: "from",
+                        issue: query.from === undefined ? "required" : "ok"
+                    },
+                    {
+                        field: "to",
+                        issue: query.to === undefined ? "required" : "ok"
+                    }
+                ]
+            );
+        }
+
+        const fromId = Number(query.from);
+        const toId = Number(query.to);
+
+        if (isNaN(fromId) || isNaN(toId)) {
+            throw new HttpError(
+                400,
+                "VALIDATION_ERROR",
+                "from and to must be valid integers",
+                [
+                    {
+                        field: "from",
+                        issue: isNaN(fromId) ? "invalid integer" : "ok"
+                    },
+                    {
+                        field: "to",
+                        issue: isNaN(toId) ? "invalid integer" : "ok"
+                    }
+                ]
+            );
+        }
 
         const result = await findShortestRoute(fromId, toId);
         return res.status(200).json(result);
     } catch (err) {
-        next(err);
+        return next(err);
     }
 }

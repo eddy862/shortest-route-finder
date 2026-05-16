@@ -1,10 +1,10 @@
 @baseUrl = http://localhost:3000
 
 ## Test cases for GET /route endpoint
-### 1) Reachable route
+### 1) Reachable route -> 200
 GET {{baseUrl}}/route?from=1&to=7
 
-### 2) Unreachable route 
+### 2) Unreachable route -> 200
 GET {{baseUrl}}/route?from=1&to=11
 
 ### 3) Missing query param -> 400
@@ -16,5 +16,141 @@ GET {{baseUrl}}/route?from=abc&to=7
 ### 5) Not found location -> 404
 GET {{baseUrl}}/route?from=1&to=999
 
-### 6) Same source and destination
+### 6) Same source and destination -> 200
 GET {{baseUrl}}/route?from=1&to=1
+
+
+## Test cases for GET /locations endpoint
+### 1) Get all locations -> 200
+GET {{baseUrl}}/locations
+
+
+## Test cases for POST /deliveries endpoint
+### 1) Valid request -> 201
+POST {{baseUrl}}/deliveries
+Content-Type: application/json
+
+{
+  "customer_id": 7,
+  "truck_plate": "ABC123"
+}
+
+### 2) non existing customer -> 404
+POST {{baseUrl}}/deliveries
+Content-Type: application/json
+
+{
+  "customer_id": 999,
+  "truck_plate": "ABC123"
+}
+
+### 3) not customer id -> 400
+POST {{baseUrl}}/deliveries
+Content-Type: application/json
+
+{
+  "customer_id": 1,
+  "truck_plate": "ABC123"
+}
+
+### 4) not reachable customer -> 400
+POST {{baseUrl}}/deliveries
+Content-Type: application/json
+
+{
+  "customer_id": 11,
+  "truck_plate": "ABC123"
+}
+
+### 5) missing req body -> 400
+POST {{baseUrl}}/deliveries
+Content-Type: application/json
+
+{
+  "customer_id": 11
+}
+
+### 6) invalid customer id -> 400
+POST {{baseUrl}}/deliveries
+Content-Type: application/json
+
+{
+  "customer_id": "abc",
+  "truck_plate": "ABC123"
+}
+
+### 7) empty truck plate -> 400
+POST {{baseUrl}}/deliveries
+Content-Type: application/json
+
+{
+  "customer_id": 7,
+  "truck_plate": "  "
+}
+
+
+## Test cases for PATCH /deliveries/:id/status endpoint
+### 1) Valid request -> 200
+PATCH {{baseUrl}}/deliveries/6/status
+Content-Type: application/json
+
+{
+  "status": "arrived"
+}
+
+### 2) non existing delivery -> 404
+PATCH {{baseUrl}}/deliveries/999/status
+Content-Type: application/json
+
+{
+  "status": "arrived"
+}
+
+### 3) invalid delivery id -> 400
+PATCH {{baseUrl}}/deliveries/abc/status
+Content-Type: application/json
+
+{
+  "status": "arrived"
+}
+
+### 4) missing status in req body -> 400
+PATCH {{baseUrl}}/deliveries/6/status
+Content-Type: application/json
+
+{
+}
+
+### 5) invalid status value -> 400
+PATCH {{baseUrl}}/deliveries/6/status
+Content-Type: application/json
+
+{
+  "status": "invalid_status"
+}
+
+### 6) delivery already arrived -> 400
+PATCH {{baseUrl}}/deliveries/6/status
+Content-Type: application/json
+
+{
+  "status": "arrived"
+}
+
+### 7) empty status value -> 400
+PATCH {{baseUrl}}/deliveries/6/status
+Content-Type: application/json
+
+{
+  "status": "   "
+}
+
+
+## Test cases for GET /locations/unreachable endpoint
+### 1) Get unreachable locations
+GET {{baseUrl}}/locations/unreachable
+
+
+## Test cases for GET /deliveries/summary endpoint
+### 1) Get delivery summary
+GET {{baseUrl}}/deliveries/summary
