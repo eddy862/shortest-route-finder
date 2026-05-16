@@ -1,5 +1,7 @@
 @baseUrl = http://localhost:3000
 
+GEt {{baseUrl}}/health
+
 ## Test cases for GET /route endpoint
 ### 1) Reachable route -> 200
 GET {{baseUrl}}/route?from=1&to=7
@@ -31,7 +33,7 @@ POST {{baseUrl}}/deliveries
 Content-Type: application/json
 
 {
-  "customer_id": 7,
+  "customer_id": 8,
   "truck_plate": "ABC123"
 }
 
@@ -44,7 +46,7 @@ Content-Type: application/json
   "truck_plate": "ABC123"
 }
 
-### 3) not customer id -> 400
+### 3) not customer id (depot) -> 400
 POST {{baseUrl}}/deliveries
 Content-Type: application/json
 
@@ -91,7 +93,7 @@ Content-Type: application/json
 
 ## Test cases for PATCH /deliveries/:id/status endpoint
 ### 1) Valid request -> 200
-PATCH {{baseUrl}}/deliveries/6/status
+PATCH {{baseUrl}}/deliveries/7/status
 Content-Type: application/json
 
 {
@@ -130,7 +132,7 @@ Content-Type: application/json
 }
 
 ### 6) delivery already arrived -> 400
-PATCH {{baseUrl}}/deliveries/6/status
+PATCH {{baseUrl}}/deliveries/7/status
 Content-Type: application/json
 
 {
