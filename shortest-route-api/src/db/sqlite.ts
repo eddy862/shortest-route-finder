@@ -1,8 +1,9 @@
 import path from "path";
 import sqlite3 from "sqlite3"
+import { env } from "../config/env";
 
-const dbPath = path.resolve(process.cwd(), "delivery.db")
-export const db = new sqlite3.Database(dbPath)
+const dbPath = path.resolve(process.cwd(), env.DB_PATH);
+export const db = new sqlite3.Database(dbPath);
 
 // this function is used to run SQL queries that return multiple rows
 export function all<T = unknown>(sql: string, params: unknown[] = []): Promise<T[]> {
