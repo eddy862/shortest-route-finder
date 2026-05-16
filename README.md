@@ -30,7 +30,7 @@ asssessment/
 ## Setup (Clone, Install, Run)
 1. Clone your repository:
 ```bash
-git clone <your-github-repo-url>
+git clone https://github.com/eddy862/shortest-route-finder.git
 ```
 
 2. Enter project folder:
