@@ -1,0 +1,20 @@
+@baseUrl = http://localhost:3000
+
+## Test cases for GET /route endpoint
+### 1) Reachable route
+GET {{baseUrl}}/route?from=1&to=7
+
+### 2) Unreachable route 
+GET {{baseUrl}}/route?from=1&to=11
+
+### 3) Missing query param -> 400
+GET {{baseUrl}}/route?from=1
+
+### 4) Invalid integer -> 400
+GET {{baseUrl}}/route?from=abc&to=7
+
+### 5) Not found location -> 404
+GET {{baseUrl}}/route?from=1&to=999
+
+### 6) Same source and destination
+GET {{baseUrl}}/route?from=1&to=1
