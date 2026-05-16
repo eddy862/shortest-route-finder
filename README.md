@@ -155,3 +155,10 @@ This project uses a separate test DB (`delivery.test.db`) reset from `delivery.b
 - New deliveries are created with `status = departed`.
 - Only `departed -> arrived` transition is valid.
 - Unreachable detection is graph-based, not only road-count-based.
+
+## Future Work
+- Build a frontend dashboard to visualize the location graph, shortest path, and unreachable nodes interactively.
+- Add authentication/authorization (for example, dispatcher/admin roles) for delivery operations.
+- Add OpenAPI/Swagger documentation so endpoints can be explored and tested from a web UI.
+- Add caching for graph loading to reduce repeated DB reads under higher traffic.
+- Add CI pipeline checks (lint, tests, build) for safer and faster delivery.
