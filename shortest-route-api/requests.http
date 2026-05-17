@@ -131,7 +131,7 @@ Content-Type: application/json
   "status": "invalid_status"
 }
 
-### 6) delivery already arrived -> 400
+### 6) delivery already arrived -> 422
 PATCH {{baseUrl}}/deliveries/7/status
 Content-Type: application/json
 
