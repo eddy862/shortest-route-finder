@@ -2,6 +2,8 @@
 
 REST API for an oil delivery dispatch system, implemented with Express + TypeScript and SQLite.
 
+API root (local and Docker): `http://localhost:3000`
+
 ## Tech Stack
 - Language: TypeScript (Node.js)
 - Framework: Express.js
@@ -26,6 +28,7 @@ asssessment/
 - Node.js 18+ (Node 20+ recommended)
 - npm 9+
 - Git (for cloning)
+- Docker Desktop (includes Docker Engine + Docker Compose) if running with Docker
 
 ## Run Options
 You can run this project in two ways:
@@ -98,6 +101,7 @@ API base URL:
 
 You can try the prepared API calls in:
 `shortest-route-api/requests.http`
+(recommended with the VS Code REST Client extension by Huachao Mao)
 
 ## Environment Variables
 - `PORT` (default `3000`)
@@ -144,6 +148,8 @@ If no path exists, it returns `reachable: false`, `path: []`, and `total_distanc
 - `GET /deliveries/summary`: Return per-customer delivery totals and most recent delivery time.
 
 ## Example cURL Commands
+Note: example response values are illustrative. Actual IDs, timestamps, and totals can vary based on current database state.
+
 ### 1) GET /route
 ```bash
 curl "http://localhost:3000/route?from=1&to=7"
