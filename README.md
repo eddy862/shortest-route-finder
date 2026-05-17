@@ -27,8 +27,13 @@ asssessment/
 - npm 9+
 - Git (for cloning)
 
-## Setup (Clone, Install, Run)
-1. Clone your repository:
+## Run Options
+You can run this project in two ways:
+- Option 1: Run locally with Node.js
+- Option 2: Run with Docker
+
+## Common Setup (Required for Both Options)
+1. Clone repository:
 ```bash
 git clone https://github.com/eddy862/shortest-route-finder.git
 ```
@@ -38,12 +43,13 @@ git clone https://github.com/eddy862/shortest-route-finder.git
 cd asssessment/shortest-route-api
 ```
 
-3. Install dependencies:
+## Option 1: Run Locally (Node.js)
+1. Install dependencies:
 ```bash
 npm install
 ```
 
-4. Create `.env` from example:
+2. Create `.env` from example:
 ```bash
 cp .env.example .env
 ```
@@ -52,12 +58,46 @@ Windows PowerShell:
 Copy-Item .env.example .env
 ```
 
-5. Start development server:
+3. Start development server:
 ```bash
 npm run dev
 ```
 
+Optional (local DB reset):
+```bash
+npm run db:reset
+```
+This reset restores the database to the seeded initial state (from `delivery.backup.initial.db`), not an empty database.
+
 Server default: `http://localhost:3000`
+
+## Option 2: Run With Docker
+1. Build and start container:
+```bash
+docker compose up --build -d
+```
+
+2. View logs:
+```bash
+docker compose logs -f
+```
+
+3. Stop container:
+```bash
+docker compose down
+```
+
+4. Reset DB inside container:
+```bash
+docker compose exec api npm run db:reset
+```
+This reset restores the database to the seeded initial state (from `delivery.backup.initial.db`), not an empty database.
+
+API base URL:
+`http://localhost:3000`
+
+You can try the prepared API calls in:
+`shortest-route-api/requests.http`
 
 ## Environment Variables
 - `PORT` (default `3000`)
