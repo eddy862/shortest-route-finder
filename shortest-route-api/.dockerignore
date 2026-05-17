@@ -1,0 +1,17 @@
+node_modules
+dist
+.git
+.gitignore
+npm-debug.log*
+coverage
+*.log
+
+# local/dev/test DBs (keep backup seed included)
+delivery.db
+delivery.dev.db
+delivery.test.db
+
+# editor files
+.vscode
+.idea
+.DS_Store
